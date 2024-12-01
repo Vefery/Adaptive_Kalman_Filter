@@ -94,11 +94,11 @@ class AEKF():
 delta_t = 1.0
 total = 1000
 
-A = torch.tensor([[1, 0, delta_t, 0], [0, 1, 0, delta_t], [0, 0, 1, 0], [0, 0, 0, 1]])
-H = torch.tensor([[1, 0, 0, 0], [0, 1, 0, 0]], dtype=torch.float32)
-Q = 0.01 * torch.diag(torch.tensor([1, 1, 1, 1]))
-R = 0.1 * torch.diag(torch.tensor([1.0, 1.0]))
-x0 = torch.tensor([[1], [1], [0], [0]], dtype=torch.float32)
+A = torch.tensor([[1, delta_t], [0, 1]])
+H = torch.tensor([[1, 0]], dtype=torch.float32)
+Q = 0.01 * torch.tensor([[(delta_t ** 3) / 3, (delta_t ** 2) / 2], [(delta_t ** 2) / 2, delta_t]])
+R = 0.1 * torch.tensor([1.0])
+x0 = torch.tensor([[0], [0]], dtype=torch.float32)
 
 sigma_v = sqrt(0.1)
 dist = Normal(0, sigma_v)
